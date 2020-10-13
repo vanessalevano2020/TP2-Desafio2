@@ -1,10 +1,28 @@
 let express = require('express');
 let router = express.Router();
 const dataInventor = require('./../data/Inventor');
+const config = require('./config.js');
+const jwt = require('jsonwebtoken');
+const verifyToken = require('./../src/middleware/verifyToken');
 
-/* GET listado de inventores */
-router.get('/', async function(req, res, next) {
-  res.json(await dataInventor.getAllInventors());
+router.post('/accessToken', async function(req, res){
+    const user = {
+        username: "admin",
+        pass: "admin123"
+    }
+
+    const admin = req.body;
+    if(admin.username == user.username && admin.pass == user.pass ){
+        const token = jwt.sign(user, config.secret ,{
+            expiresIn: 60*1
+        });
+        res.send({auth:true, token});
+    }else  res.send("usuario no registrado");
+});
+
+//GET listado de inventores
+router.get('/',verifyToken, async function(req, res, next) {
+    res.json(await dataInventor.getAllInventors());
 });
 
 // GET de un inventor
