@@ -8,6 +8,7 @@ let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 let inventorsRouter = require('./routes/inventors');
 let virusRouter = require('./routes/virus');
+let loginRouter = require('./routes/login');
 
 let app = express();
 
@@ -23,16 +24,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
-app.use('/api/inventors',inventorsRouter);
+app.use('/api/inventors', inventorsRouter);
 app.use('/api/virus', virusRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -41,5 +43,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(4200, () => console.log('running on port 4200!'));
 
 module.exports = app;
