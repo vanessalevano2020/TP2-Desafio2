@@ -1,24 +1,24 @@
 const config = require('../../routes/config.js');
 const jwt = require('jsonwebtoken');
 
-function verifyToken(req,res,next){
-    const token = req.headers['x-access-token'];
-    if(!token){
-        return res.status(401).json({
-            auth:false,
-            message: "Token no informado"
-        });
-    }
+function verifyToken(req, res, next) {
+  const token = req.headers['x-access-token'];
 
-    jwt.verify(token,config.secret, function(error){
-        if(error){
-            res.status(401).json({
-                auth:false,
-                error: 'Token incorrecto'
-        })
-        };
+  if (!token) {
+    return res.status(401).json({
+      auth: false,
+      errorMessage: 'No token provided',
     });
-    next();
+  } else {
+    jwt.verify(token, config.secret, function (error) {
+      if (error) {
+        res.status(401).json({
+          auth: false,
+          errorMessage: 'Invalid token',
+        });
+      } else next();
+    });
+  }
 }
 
 module.exports = verifyToken;
