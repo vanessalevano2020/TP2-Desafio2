@@ -26,7 +26,7 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/inventors', inventorsRouter);
 app.use('/api/virus', virusRouter);
-app.use('/login', loginRouter);
+app.use('/api/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -44,6 +44,6 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-app.listen(4200, () => console.log('running on port 4200!'));
+//app.listen(4200, () => console.log('running on port 4200!'));
 
 module.exports = app;

@@ -2,7 +2,6 @@ let express = require('express');
 let router = express.Router();
 const dataInventor = require('./../data/Inventor');
 const config = require('./config.js');
-const jwt = require('jsonwebtoken');
 const verifyToken = require('./../src/middleware/verifyToken');
 
 //GET listado de inventores
